@@ -21,8 +21,45 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleBuyNow = () => {
-    // Substitua pela sua URL real do Stripe Checkout
-    window.location.href = "https://checkout.stripe.com/pay/...";
+    // Primeiro, se houver um link direto fornecido no cliente, usa como fallback rápido
+    const clientLink = import.meta.env.VITE_YAMPI_CHECKOUT_LINK;
+    if (clientLink) {
+      window.location.href = clientLink;
+      return;
+    }
+
+    // Caso contrário, pede ao servidor para criar/retornar um link de checkout
+    (async () => {
+      try {
+        const productId = import.meta.env.VITE_YAMPI_PRODUCT_ID;
+        const resp = await fetch("/api/create-yampi-checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ productId }),
+        });
+
+        if (!resp.ok) {
+          const error = await resp.json().catch(() => ({}));
+          console.error("Erro criando checkout Yampi", resp.status, error);
+          alert("Erro ao iniciar checkout. Tente novamente mais tarde.");
+          return;
+        }
+
+        const data = await resp.json();
+        if (!data?.url) {
+          console.error("Resposta inválida do endpoint Yampi", data);
+          alert("Erro ao iniciar checkout. Resposta inválida do servidor.");
+          return;
+        }
+
+        window.location.href = data.url;
+      } catch (err) {
+        console.error(err);
+        alert(
+          "Erro ao iniciar checkout. Verifique a configuração do servidor."
+        );
+      }
+    })();
   };
 
   const scrollToCheckout = () => {
@@ -143,13 +180,14 @@ function App() {
                 </div>
               ))}
             </div>
-
-            <button
-              onClick={scrollToCheckout}
-              className="px-12 py-5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl text-xl font-bold hover:scale-105 hover:glow-purple transition-all shadow-2xl"
-            >
-              Comprar Agora
-            </button>
+            <a href="https://atoms-code.pay.yampi.com.br/r/3TZJOE9PYP">
+              <button
+                onClick={scrollToCheckout}
+                className="px-12 py-5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl text-xl font-bold hover:scale-105 hover:glow-purple transition-all shadow-2xl"
+              >
+                Comprar Agora
+              </button>
+            </a>
           </div>
         </div>
       </section>
@@ -345,12 +383,14 @@ function App() {
                   <div className="text-gray-400">Pagamento único</div>
                 </div>
 
-                <button
-                  onClick={handleBuyNow}
-                  className="w-full md:w-auto px-16 py-6 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl text-2xl font-bold hover:scale-105 hover:glow-purple transition-all shadow-2xl mb-8"
-                >
-                  Comprar Agora
-                </button>
+                <a href="https://atoms-code.pay.yampi.com.br/r/3TZJOE9PYP">
+                  <button
+                    onClick={scrollToCheckout}
+                    className="px-12 py-5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl text-xl font-bold hover:scale-105 hover:glow-purple transition-all shadow-2xl"
+                  >
+                    Comprar Agora
+                  </button>
+                </a>
 
                 <div className="space-y-3 text-left max-w-md mx-auto">
                   {[
