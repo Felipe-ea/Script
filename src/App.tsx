@@ -12,6 +12,9 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import img1 from "../images/img.png";
+import img2 from "../images/img2.png";
+import suporteImg from "../images/suporte.png";
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -164,7 +167,7 @@ function App() {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent">
                     <img
                       className="w-full h-full object-cover"
-                      src="./images/img2.png"
+                      src={img2}
                       alt=""
                     />
                   </div>
@@ -186,7 +189,7 @@ function App() {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent">
                     <img
                       className="w-full h-full object-cover"
-                      src="./images/tutorial.jpg"
+                      src={img1}
                       alt=""
                     />
                   </div>
@@ -207,7 +210,7 @@ function App() {
                   <div className="pt-4 flex items-center justify-center inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent">
                     <img
                       className="w-[50%] h-[50%] object-cover"
-                      src="./images/suporte.png"
+                      src={suporteImg}
                       alt=""
                     />
                   </div>
