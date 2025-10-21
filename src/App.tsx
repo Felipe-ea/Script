@@ -15,6 +15,7 @@ import {
 import img1 from "../images/img.png";
 import img2 from "../images/img2.png";
 import suporteImg from "../images/suporte.png";
+import cassinoImg from "../images/cassino.webp";
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -111,6 +112,14 @@ function App() {
               </span>{" "}
               em minutos
             </h1>
+
+            <div className="w-full h-64 md:h-96 mb-8 rounded-xl overflow-hidden shadow-2xl">
+              <img
+                className="w-full h-full object-cover"
+                src={cassinoImg}
+                alt=""
+              />
+            </div>
 
             <p className="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
               Adquira o Script de Cassino Premium e tenha um sistema completo,
