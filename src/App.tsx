@@ -16,6 +16,7 @@ import img1 from "../images/img.png";
 import img2 from "../images/img2.png";
 import suporteImg from "../images/suporte.png";
 import cassinoImg from "../images/cassino.webp";
+import mock from "../images/mock.png";
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -150,12 +151,8 @@ function App() {
               em minutos
             </h1>
 
-            <div className="w-full h-64 md:h-96 mb-8 rounded-xl overflow-hidden shadow-2xl">
-              <img
-                className="w-full h-full object-cover"
-                src={cassinoImg}
-                alt=""
-              />
+            <div className="w-full h-68 md:h-96 mb-8 rounded-xl overflow-hidden shadow-2xl">
+              <img className="w-full h-full object-cover" src={mock} alt="" />
             </div>
 
             <p className="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
